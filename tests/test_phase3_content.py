@@ -24,8 +24,8 @@ def test_readmes_are_synchronized_for_current_phase() -> None:
     readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     readme_cn = (REPO_ROOT / "README_CN.md").read_text(encoding="utf-8")
 
-    assert "Phase 4" in readme
-    assert "Phase 4" in readme_cn
+    assert "Phase 5" in readme
+    assert "Phase 5" in readme_cn
     assert "product-knowledge-ops" in readme
     assert "product-knowledge-ops" in readme_cn
 

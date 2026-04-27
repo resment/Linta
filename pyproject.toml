@@ -12,6 +12,17 @@ license = { text = "MIT" }
 authors = [
   { name = "llm-wiki-kit contributors" }
 ]
+keywords = ["llm", "knowledge-base", "markdown", "wiki", "agents"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Documentation",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
   "pydantic>=2.0",
   "pyyaml>=6.0",
@@ -28,15 +39,23 @@ dev = [
 [project.scripts]
 llm-wiki = "llm_wiki_kit.cli:app"
 
+[project.urls]
+Homepage = "https://github.com/resment/LLM-Wiki-Kit"
+Repository = "https://github.com/resment/LLM-Wiki-Kit"
+Issues = "https://github.com/resment/LLM-Wiki-Kit/issues"
+
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-llm_wiki_kit = ["py.typed"]
+llm_wiki_kit = ["py.typed", "assets/hermes/skills/*/*.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 
 [tool.ruff]
 line-length = 100

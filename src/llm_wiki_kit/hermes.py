@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import shutil
 from dataclasses import dataclass, field
+from importlib.resources import files
 from pathlib import Path
 
 DEFAULT_HERMES_SKILL_TARGET = Path.home() / ".hermes/skills/llm-wiki-kit"
@@ -48,6 +49,9 @@ def install_skills(
 
 
 def hermes_skills_root() -> Path:
-    """Return the repository Hermes skills directory."""
+    """Return bundled Hermes skills from source checkout or installed package data."""
 
-    return Path(__file__).resolve().parents[2] / "hermes/skills"
+    repo_skills = Path(__file__).resolve().parents[2] / "hermes/skills"
+    if repo_skills.exists():
+        return repo_skills
+    return Path(str(files("llm_wiki_kit") / "assets/hermes/skills"))

@@ -6,7 +6,7 @@
 
 ## 当前状态
 
-v0.1 Phase 4 提供确定性的项目脚手架、初始化命令、核心本地工具、完善的文档和模板、匿名示例知识库，以及可选 Hermes skills。默认不调用任何 LLM API。
+v0.1 Phase 5 提供确定性的项目脚手架、初始化命令、核心本地工具、完善的文档和模板、匿名示例知识库、可选 Hermes skills、发布元数据和示例校验。默认不调用任何 LLM API。
 
 ## 快速开始
 
@@ -28,7 +28,7 @@ archive/               归档资料。
 
 ## CLI
 
-Phase 4 支持：
+Phase 5 支持：
 
 ```bash
 llm-wiki init ./SimonKnowledgeBase
@@ -40,6 +40,7 @@ llm-wiki lint ./SimonKnowledgeBase
 llm-wiki export current ./SimonKnowledgeBase
 llm-wiki mini-kb create ./SimonKnowledgeBase --topic "Example" --purpose "Review prep"
 llm-wiki hermes install-skills --dry-run
+python scripts/validate_example.py
 ```
 
 ## current_draft vs current
@@ -71,4 +72,4 @@ Hermes 集成是可选能力，位于 `hermes/`。安装命令默认复制 skill
 
 ## 后续路线
 
-- Phase 5：打磨、校验和发布准备。
+见 [ROADMAP.md](ROADMAP.md)。

@@ -5,7 +5,7 @@ effective_date: 2026-04-21
 
 # Core Knowledge Portal Current State
 
-Core Knowledge Portal is active. Checkout stabilization is improving, evidence ledger QA is
+Core Knowledge Portal is active. Review intake stabilization is improving, evidence ledger QA is
 underway, and reversal edge cases remain a scale risk for dependent betas.
 
 Sources:

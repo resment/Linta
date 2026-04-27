@@ -9,7 +9,7 @@ Core Knowledge Portal owns review intake, reversal handling, and evidence status
 
 Current facts:
 
-- Checkout stabilization is progressing.
+- Review intake stabilization is progressing.
 - Evidence ledger QA is underway.
 - Reversal edge cases remain a blocker for dependent workflow scale.
 

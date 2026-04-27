@@ -10,7 +10,7 @@ Core Knowledge Portal completed basic review intake stabilization and started ev
 
 Status:
 
-- Checkout stability is improving but reversal edge cases remain under review.
+- Review intake stability is improving but reversal edge cases remain under review.
 - Evidence ledger events can support downstream review routing.
 - Offer configuration is being generalized for knowledge and review operations scenarios.
 
