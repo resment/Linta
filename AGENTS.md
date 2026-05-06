@@ -2,7 +2,7 @@
 
 ## Project
 
-This repository implements llm-wiki-kit, a framework for building LLM-compiled Markdown knowledge bases.
+This repository implements Linta, a framework for building LLM-compiled Markdown knowledge bases.
 
 ## Commands
 

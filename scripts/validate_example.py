@@ -62,7 +62,7 @@ def validate_example(example_root: Path) -> list[str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate a bundled llm-wiki-kit example.")
+    parser = argparse.ArgumentParser(description="Validate a bundled Linta example.")
     parser.add_argument(
         "example_root",
         nargs="?",

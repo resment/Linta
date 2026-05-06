@@ -4,19 +4,22 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from llm_wiki_kit.agent_access import (
+from linta.agent_access import (
     access_config_path,
     configure_agent_access,
+    default_agent_access_config,
     is_read_allowed,
+    legacy_access_config_path,
     list_allowed_context_files,
     read_agent_access_config,
+    render_agent_access_yaml,
     set_agent_access,
 )
-from llm_wiki_kit.claude_desktop import render_claude_desktop_config
-from llm_wiki_kit.cli import app
-from llm_wiki_kit.doctor import run_doctor
-from llm_wiki_kit.init_kb import init_knowledge_base
-from llm_wiki_kit.mcp_server import READ_ONLY_TOOLS, ReadOnlyMcpServer
+from linta.claude_desktop import render_claude_desktop_config
+from linta.cli import app
+from linta.doctor import run_doctor
+from linta.init_kb import init_knowledge_base
+from linta.mcp_server import READ_ONLY_TOOLS, ReadOnlyMcpServer
 
 runner = CliRunner()
 
@@ -27,7 +30,7 @@ def test_configure_agent_access_creates_default_policy(tmp_path: Path) -> None:
 
     result = configure_agent_access(kb, primary_agent="hermes")
 
-    assert result.path == kb.resolve() / ".llm-wiki/agent_access.yaml"
+    assert result.path == kb.resolve() / ".linta/agent_access.yaml"
     config = read_agent_access_config(kb)
     assert config.primary_agent == "hermes"
     assert config.agents["hermes"].mode == "write"
@@ -48,6 +51,22 @@ def test_agent_access_refuses_existing_without_force(tmp_path: Path) -> None:
     assert result.config.primary_agent == "codex"
     assert result.config.agents["codex"].mode == "write"
     assert result.config.agents["hermes"].mode == "read"
+
+
+def test_agent_access_reads_legacy_policy_path(tmp_path: Path) -> None:
+    kb = tmp_path / "kb"
+    init_knowledge_base(kb)
+    legacy_path = legacy_access_config_path(kb)
+    legacy_path.parent.mkdir(parents=True)
+    legacy_path.write_text(
+        render_agent_access_yaml(default_agent_access_config("codex")),
+        encoding="utf-8",
+    )
+
+    config = read_agent_access_config(kb)
+
+    assert config.primary_agent == "codex"
+    assert not access_config_path(kb).exists()
 
 
 def test_agent_set_updates_single_policy_and_primary_writer(tmp_path: Path) -> None:
@@ -127,7 +146,7 @@ def test_claude_desktop_config_and_status(tmp_path: Path) -> None:
     configure_agent_access(kb, primary_agent="hermes")
 
     snippet = json.loads(render_claude_desktop_config(kb))
-    args = snippet["mcpServers"]["llm-wiki-kit"]["args"]
+    args = snippet["mcpServers"]["linta"]["args"]
     assert args[:2] == ["mcp", "serve"]
     assert "claude-desktop" in args
 

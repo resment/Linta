@@ -1,6 +1,6 @@
 # Hermes Adapter
 
-This directory contains optional Hermes skills for maintaining an llm-wiki-kit knowledge base.
+This directory contains optional Hermes skills for maintaining an Linta knowledge base.
 
 The skills are prompt-and-procedure adapters. They do not call external APIs by themselves and they
 follow the same safety model as the CLI:
@@ -28,19 +28,19 @@ Bundled skills:
 Dry run:
 
 ```bash
-llm-wiki hermes install-skills --dry-run
+linta hermes install-skills --dry-run
 ```
 
 Default target:
 
 ```text
-~/.hermes/skills/llm-wiki-kit/
+~/.hermes/skills/linta/
 ```
 
 Custom target:
 
 ```bash
-llm-wiki hermes install-skills --target /path/to/hermes/skills/llm-wiki-kit
+linta hermes install-skills --target /path/to/hermes/skills/linta
 ```
 
 Existing skill directories are skipped unless `--force` is provided.
@@ -48,7 +48,7 @@ Existing skill directories are skipped unless `--force` is provided.
 Check status:
 
 ```bash
-llm-wiki hermes status
+linta hermes status
 ```
 
 ## Configure a Knowledge Base
@@ -56,9 +56,9 @@ llm-wiki hermes status
 After installing skills, bind the default knowledge base:
 
 ```bash
-llm-wiki agents wizard /path/to/YourKnowledgeBase
-llm-wiki hermes bootstrap-prompt /path/to/YourKnowledgeBase
-llm-wiki hermes configure-kb /path/to/YourKnowledgeBase
+linta agents wizard /path/to/YourKnowledgeBase
+linta hermes bootstrap-prompt /path/to/YourKnowledgeBase
+linta hermes configure-kb /path/to/YourKnowledgeBase
 ```
 
 `bootstrap-prompt` prints a natural-language installation request that can be pasted into Hermes
@@ -67,7 +67,7 @@ Agent.
 This writes:
 
 ```text
-~/.hermes/skills/llm-wiki-kit/profiles/default.md
+~/.hermes/skills/linta/profiles/default.md
 ```
 
 Use `--profile <name>` for additional knowledge bases.
@@ -75,14 +75,14 @@ Use `--profile <name>` for additional knowledge bases.
 v0.3.0 stores multi-Agent access policy in the knowledge base:
 
 ```text
-/path/to/YourKnowledgeBase/.llm-wiki/agent_access.yaml
+/path/to/YourKnowledgeBase/.linta/agent_access.yaml
 ```
 
 Use Hermes as the primary writer when Hermes should maintain the KB, and keep Claude Desktop or
 other consumers in read mode:
 
 ```bash
-llm-wiki agents configure /path/to/YourKnowledgeBase --primary-agent hermes
+linta agents configure /path/to/YourKnowledgeBase --primary-agent hermes
 ```
 
 ## Uploaded Files and Daily Maintenance
@@ -90,13 +90,13 @@ llm-wiki agents configure /path/to/YourKnowledgeBase --primary-agent hermes
 For an uploaded file, ask Hermes to use `import_uploaded_raw_source`. The deterministic CLI command is:
 
 ```bash
-llm-wiki raw import /path/to/YourKnowledgeBase /path/to/uploaded.md --source-type docs
+linta raw import /path/to/YourKnowledgeBase /path/to/uploaded.md --source-type docs
 ```
 
 For daily checks, ask Hermes to use `daily_maintenance`:
 
 ```bash
-llm-wiki maintenance daily /path/to/YourKnowledgeBase
+linta maintenance daily /path/to/YourKnowledgeBase
 ```
 
 Daily maintenance should recommend targeted ingest only when new sources or concrete issues exist.

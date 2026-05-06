@@ -3,14 +3,14 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "llm-wiki-kit"
-version = "0.3.0"
-description = "Deterministic scaffolding and CLI helpers for LLM-compiled Markdown knowledge bases."
+name = "linta"
+version = "0.3.1"
+description = "Deterministic scaffolding and CLI helpers for Linta Markdown knowledge bases."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "PolyForm-Noncommercial-1.0.0" }
 authors = [
-  { name = "llm-wiki-kit contributors" }
+  { name = "Linta contributors" }
 ]
 keywords = ["llm", "knowledge-base", "markdown", "wiki", "agents"]
 classifiers = [
@@ -36,7 +36,8 @@ dev = [
 ]
 
 [project.scripts]
-llm-wiki = "llm_wiki_kit.cli:app"
+linta = "linta.cli:app"
+llm-wiki = "linta.cli:deprecated_main"
 
 [project.urls]
 Homepage = "https://github.com/resment/LLM-Wiki-Kit"
@@ -51,7 +52,7 @@ license-files = ["LICENSE", "COMMERCIAL.md", "CONTRIBUTING.md"]
 where = ["src"]
 
 [tool.setuptools.package-data]
-llm_wiki_kit = ["py.typed", "assets/hermes/skills/*/*.md"]
+linta = ["py.typed", "assets/hermes/skills/*/*.md"]
 
 [tool.setuptools.data-files]
 "templates/prompts" = [

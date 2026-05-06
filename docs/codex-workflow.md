@@ -6,10 +6,10 @@ Codex should read `AGENTS.md`, avoid raw mutations, and keep changes determinist
 
 1. Read root `AGENTS.md`.
 2. For a generated knowledge base, read `ai_kb/schema/AGENTS.md`.
-3. Use `llm-wiki manifest scan` and `source-card create` for deterministic setup.
-4. Use `llm-wiki prompt ingest` to get task-specific instructions.
+3. Use `linta manifest scan` and `source-card create` for deterministic setup.
+4. Use `linta prompt ingest` to get task-specific instructions.
 5. Edit wiki/source-card/current-draft files only as allowed by the schema rules.
-6. Run `llm-wiki lint`.
+6. Run `linta lint`.
 7. Show changed files and human review questions.
 
 ## Constraints

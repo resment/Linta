@@ -2,11 +2,11 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from llm_wiki_kit.cli import app
-from llm_wiki_kit.init_kb import init_knowledge_base
-from llm_wiki_kit.maintenance import maintenance_json, run_daily_maintenance
-from llm_wiki_kit.raw_import import import_raw_source
-from llm_wiki_kit.source_card import create_source_card
+from linta.cli import app
+from linta.init_kb import init_knowledge_base
+from linta.maintenance import maintenance_json, run_daily_maintenance
+from linta.raw_import import import_raw_source
+from linta.source_card import create_source_card
 
 runner = CliRunner()
 

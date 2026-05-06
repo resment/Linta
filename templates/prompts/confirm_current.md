@@ -11,7 +11,7 @@ Rules:
 3. Do not modify `ai_kb/raw/`.
 4. Record superseded or rejected claims when relevant.
 5. Update `ai_kb/wiki/log.md`.
-6. Recommend running `llm-wiki export current` after confirmation.
+6. Recommend running `linta export current` after confirmation.
 
 Output:
 - current pages changed;

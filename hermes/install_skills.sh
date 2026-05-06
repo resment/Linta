@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-TARGET="${1:-$HOME/.hermes/skills/llm-wiki-kit}"
+TARGET="${1:-$HOME/.hermes/skills/linta}"
 SOURCE_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)/skills"
 
 mkdir -p "$TARGET"

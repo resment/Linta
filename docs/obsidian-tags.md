@@ -1,23 +1,23 @@
 # Obsidian Tags
 
-llm-wiki-kit supports Obsidian-readable inline Markdown tags without making Obsidian a required
+Linta supports Obsidian-readable inline Markdown tags without making Obsidian a required
 dependency.
 
 Tags live in a managed Markdown block:
 
 ```md
-<!-- llm-wiki-tags:start -->
+<!-- linta-tags:start -->
 #project/example #status/draft #capability/review
-<!-- llm-wiki-tags:end -->
+<!-- linta-tags:end -->
 ```
 
 Use deterministic commands:
 
 ```bash
-llm-wiki tags list ./kb/ai_kb/wiki/projects/example.md
-llm-wiki tags add ./kb/ai_kb/wiki/projects/example.md --tag project/example --tag status/draft
-llm-wiki tags set ./kb/ai_kb/wiki/projects/example.md --tag capability/review
-llm-wiki prompt tag ./kb ai_kb/wiki/projects/example.md
+linta tags list ./kb/ai_kb/wiki/projects/example.md
+linta tags add ./kb/ai_kb/wiki/projects/example.md --tag project/example --tag status/draft
+linta tags set ./kb/ai_kb/wiki/projects/example.md --tag capability/review
+linta prompt tag ./kb ai_kb/wiki/projects/example.md
 ```
 
 Rules:

@@ -29,30 +29,30 @@ Hermes skills should follow the same safety boundaries as the CLI:
 - output human review questions.
 
 v0.2.1 adds Hermes skills for Obsidian tags and machine-readable indexes. These skills wrap the
-existing deterministic CLI workflows: `llm-wiki tags list/add/set`, `llm-wiki prompt tag`, and
-`llm-wiki index build`.
+existing deterministic CLI workflows: `linta tags list/add/set`, `linta prompt tag`, and
+`linta index build`.
 
 ## CLI Install
 
 Dry run:
 
 ```bash
-llm-wiki hermes install-skills --dry-run
+linta hermes install-skills --dry-run
 ```
 
 Install to the default target:
 
 ```bash
-llm-wiki hermes install-skills
-llm-wiki hermes status
+linta hermes install-skills
+linta hermes status
 ```
 
 Bind the default knowledge base for first-use Hermes workflows:
 
 ```bash
-llm-wiki agents wizard /path/to/YourKnowledgeBase
-llm-wiki hermes bootstrap-prompt /path/to/YourKnowledgeBase
-llm-wiki hermes configure-kb /path/to/YourKnowledgeBase
+linta agents wizard /path/to/YourKnowledgeBase
+linta hermes bootstrap-prompt /path/to/YourKnowledgeBase
+linta hermes configure-kb /path/to/YourKnowledgeBase
 ```
 
 `bootstrap-prompt` prints a natural-language request that can be pasted into Hermes Agent. The
@@ -61,13 +61,13 @@ agent can then run the deterministic install and profile commands for the user.
 Default target:
 
 ```text
-~/.hermes/skills/llm-wiki-kit/
+~/.hermes/skills/linta/
 ```
 
 Custom target:
 
 ```bash
-llm-wiki hermes install-skills --target /tmp/hermes-skills/llm-wiki-kit
+linta hermes install-skills --target /tmp/hermes-skills/linta
 ```
 
 Existing skill directories are skipped unless `--force` is provided.
@@ -75,27 +75,27 @@ Existing skill directories are skipped unless `--force` is provided.
 Check installed skills and profiles:
 
 ```bash
-llm-wiki hermes status
-llm-wiki hermes status --target /tmp/hermes-skills/llm-wiki-kit
+linta hermes status
+linta hermes status --target /tmp/hermes-skills/linta
 ```
 
 ## Knowledge Base Profiles
 
-v0.3.0 adds KB-local Agent access policy:
+v0.3.1 adds KB-local Agent access policy:
 
 ```bash
-llm-wiki agents configure /path/to/YourKnowledgeBase --primary-agent hermes
-llm-wiki agents status /path/to/YourKnowledgeBase
+linta agents configure /path/to/YourKnowledgeBase --primary-agent hermes
+linta agents status /path/to/YourKnowledgeBase
 ```
 
-Hermes profiles now include the current Hermes access mode when `.llm-wiki/agent_access.yaml`
+Hermes profiles now include the current Hermes access mode when `.linta/agent_access.yaml`
 exists. A common setup is Hermes as the read/write Agent and Claude Desktop, Codex, or OpenClaw as
 read-only consumers.
 
 `configure-kb` writes a profile file under:
 
 ```text
-~/.hermes/skills/llm-wiki-kit/profiles/default.md
+~/.hermes/skills/linta/profiles/default.md
 ```
 
 Use `--profile <name>` for multiple knowledge bases and `--target <dir>` when skills are installed
@@ -107,7 +107,7 @@ provided.
 Generate the prompt:
 
 ```bash
-llm-wiki hermes bootstrap-prompt /path/to/YourKnowledgeBase
+linta hermes bootstrap-prompt /path/to/YourKnowledgeBase
 ```
 
 Paste the output into Hermes Agent. The prompt instructs Hermes to install skills, configure the
@@ -118,7 +118,7 @@ default profile, run lint, and report what changed.
 When a user uploads a file through Hermes gateway, first import it into raw:
 
 ```bash
-llm-wiki raw import /path/to/YourKnowledgeBase /path/to/uploaded.md --source-type docs
+linta raw import /path/to/YourKnowledgeBase /path/to/uploaded.md --source-type docs
 ```
 
 Then create a source card and ingest only that imported raw source. Do not run a full re-ingest.
@@ -128,7 +128,7 @@ Then create a source card and ingest only that imported raw source. Do not run a
 Daily maintenance is deterministic:
 
 ```bash
-llm-wiki maintenance daily /path/to/YourKnowledgeBase
+linta maintenance daily /path/to/YourKnowledgeBase
 ```
 
 The report identifies new raw sources, missing source cards, lint findings, and recommended actions.
@@ -137,17 +137,17 @@ semantic wiki update.
 
 ## Natural-Language Examples
 
-- "Use llm-wiki-kit default knowledge base and process the file I just uploaded."
-- "Run daily maintenance for my default llm-wiki-kit knowledge base."
-- "Check whether llm-wiki-kit Hermes skills are installed and which KB profile is active."
-- "Configure Hermes as the primary llm-wiki writer and keep Claude Desktop read-only."
+- "Use Linta default knowledge base and process the file I just uploaded."
+- "Run daily maintenance for my default Linta knowledge base."
+- "Check whether Linta Hermes skills are installed and which KB profile is active."
+- "Configure Hermes as the primary linta writer and keep Claude Desktop read-only."
 
 ## Shell Install
 
 The repository also includes:
 
 ```bash
-hermes/install_skills.sh /tmp/hermes-skills/llm-wiki-kit
+hermes/install_skills.sh /tmp/hermes-skills/linta
 ```
 
 The shell script is intentionally conservative: it creates the target directory and skips existing

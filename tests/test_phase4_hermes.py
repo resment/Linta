@@ -2,14 +2,14 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from llm_wiki_kit.cli import app
-from llm_wiki_kit.hermes import (
+from linta.cli import app
+from linta.hermes import (
     configure_knowledge_base_profile,
     inspect_hermes_status,
     install_skills,
     render_bootstrap_prompt,
 )
-from llm_wiki_kit.init_kb import init_knowledge_base
+from linta.init_kb import init_knowledge_base
 
 runner = CliRunner()
 
@@ -133,11 +133,11 @@ def test_hermes_bootstrap_prompt_includes_install_configure_and_safety(tmp_path:
 
     prompt = render_bootstrap_prompt(kb_root, target=tmp_path / "skills", profile="Work KB")
 
-    assert "llm-wiki hermes install-skills" in prompt
-    assert "llm-wiki hermes configure-kb" in prompt
-    assert "llm-wiki lint" in prompt
-    assert "llm-wiki maintenance daily" in prompt
-    assert "llm-wiki raw import" in prompt
+    assert "linta hermes install-skills" in prompt
+    assert "linta hermes configure-kb" in prompt
+    assert "linta lint" in prompt
+    assert "linta maintenance daily" in prompt
+    assert "linta raw import" in prompt
     assert str(kb_root.resolve()) in prompt
     assert "work-kb" in prompt
     assert "ai_kb/raw/" in prompt
@@ -151,7 +151,7 @@ def test_cli_hermes_bootstrap_prompt(tmp_path: Path) -> None:
 
     assert result.exit_code == 0, result.output
     assert "请帮我安装并配置" in result.output
-    assert "llm-wiki hermes install-skills" in result.output
+    assert "linta hermes install-skills" in result.output
     assert str(kb_root.resolve()) in result.output
 
 

@@ -1,18 +1,18 @@
-# llm-wiki-kit
+# 灵台 Linta
 
-`llm-wiki-kit` 是一个 source-available 的 “LLM 编译型 Markdown 知识库” 框架。
+`Linta`，中文名「灵台」，是一个 source-available 的 “LLM 编译型 Markdown 知识库” 框架。
 
 它不是普通笔记模板，也不是 RAG 系统。项目把不可变原始资料、AI 编译后的 wiki、人工确认的当前状态，以及面向 AI 工具的导出层分开管理。
 
 ## 当前状态
 
-v0.3.0 提供确定性的项目脚手架、初始化命令、manifest 扫描、source card 模板、prompt 渲染、lint、current 导出、mini-kb 草稿、可选 Hermes skills、Obsidian 友好的 Markdown tags、机器可读索引、上传文档导入、每日维护报告、doctor、Hermes status、多 Agent 访问策略和 Claude Desktop 只读 MCP adapter。默认不调用任何 LLM API。
+v0.3.1 提供确定性的项目脚手架、初始化命令、manifest 扫描、source card 模板、prompt 渲染、lint、current 导出、mini-kb 草稿、可选 Hermes skills、Obsidian 友好的 Markdown tags、机器可读索引、上传文档导入、每日维护报告、doctor、Hermes status、多 Agent 访问策略和 Claude Desktop 只读 MCP adapter。默认不调用任何 LLM API。
 
 ## 快速开始
 
 ```bash
-pip install "llm-wiki-kit @ git+https://github.com/resment/LLM-Wiki-Kit.git"
-llm-wiki init ./SimonKnowledgeBase
+pip install "linta @ git+https://github.com/resment/LLM-Wiki-Kit.git"
+linta init ./SimonKnowledgeBase
 ```
 
 如果是 clone 仓库后的本地开发环境，再使用 `pip install -e ".[dev]"`。
@@ -31,35 +31,35 @@ archive/               归档资料。
 
 ## CLI
 
-v0.3.0 支持：
+v0.3.1 支持：
 
 ```bash
-llm-wiki init ./SimonKnowledgeBase
-llm-wiki manifest scan ./SimonKnowledgeBase
-llm-wiki manifest scan ./SimonKnowledgeBase --no-preserve-manual-fields
-llm-wiki source-card create ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
-llm-wiki prompt ingest ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
-llm-wiki prompt tag ./SimonKnowledgeBase ai_kb/wiki/projects/example.md
-llm-wiki tags list ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md
-llm-wiki tags add ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md --tag project/example
-llm-wiki tags set ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md --tag status/draft
-llm-wiki index build ./SimonKnowledgeBase
-llm-wiki raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
-llm-wiki maintenance daily ./SimonKnowledgeBase
-llm-wiki doctor ./SimonKnowledgeBase
-llm-wiki agents wizard ./SimonKnowledgeBase
-llm-wiki agents status ./SimonKnowledgeBase
-llm-wiki claude-desktop config ./SimonKnowledgeBase
-llm-wiki claude-desktop status ./SimonKnowledgeBase
-llm-wiki mcp serve --agent claude-desktop --kb-root ./SimonKnowledgeBase
-llm-wiki prompt lint-ai ./SimonKnowledgeBase
-llm-wiki lint ./SimonKnowledgeBase
-llm-wiki export current ./SimonKnowledgeBase
-llm-wiki mini-kb create ./SimonKnowledgeBase --topic "Example" --purpose "Review prep"
-llm-wiki hermes install-skills --dry-run
-llm-wiki hermes status
-llm-wiki hermes bootstrap-prompt ./SimonKnowledgeBase
-llm-wiki hermes configure-kb ./SimonKnowledgeBase
+linta init ./SimonKnowledgeBase
+linta manifest scan ./SimonKnowledgeBase
+linta manifest scan ./SimonKnowledgeBase --no-preserve-manual-fields
+linta source-card create ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
+linta prompt ingest ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
+linta prompt tag ./SimonKnowledgeBase ai_kb/wiki/projects/example.md
+linta tags list ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md
+linta tags add ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md --tag project/example
+linta tags set ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md --tag status/draft
+linta index build ./SimonKnowledgeBase
+linta raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
+linta maintenance daily ./SimonKnowledgeBase
+linta doctor ./SimonKnowledgeBase
+linta agents wizard ./SimonKnowledgeBase
+linta agents status ./SimonKnowledgeBase
+linta claude-desktop config ./SimonKnowledgeBase
+linta claude-desktop status ./SimonKnowledgeBase
+linta mcp serve --agent claude-desktop --kb-root ./SimonKnowledgeBase
+linta prompt lint-ai ./SimonKnowledgeBase
+linta lint ./SimonKnowledgeBase
+linta export current ./SimonKnowledgeBase
+linta mini-kb create ./SimonKnowledgeBase --topic "Example" --purpose "Review prep"
+linta hermes install-skills --dry-run
+linta hermes status
+linta hermes bootstrap-prompt ./SimonKnowledgeBase
+linta hermes configure-kb ./SimonKnowledgeBase
 python scripts/validate_example.py
 ```
 
@@ -68,9 +68,9 @@ python scripts/validate_example.py
 初始化或配置 Hermes 后运行：
 
 ```bash
-llm-wiki doctor ./SimonKnowledgeBase
-llm-wiki agents wizard ./SimonKnowledgeBase
-llm-wiki hermes status
+linta doctor ./SimonKnowledgeBase
+linta agents wizard ./SimonKnowledgeBase
+linta hermes status
 ```
 
 `doctor` 检查知识库结构和确定性健康状态。`hermes status` 检查 skills、profiles 和默认知识库路径是否有效。
@@ -80,33 +80,33 @@ llm-wiki hermes status
 默认使用一个主读写 Agent，其他 Agent 只读：
 
 ```bash
-llm-wiki agents wizard ./SimonKnowledgeBase
-llm-wiki agents status ./SimonKnowledgeBase
+linta agents wizard ./SimonKnowledgeBase
+linta agents status ./SimonKnowledgeBase
 ```
 
-策略写入知识库内部的 `.llm-wiki/agent_access.yaml`。常见配置是 Hermes 或 Codex 作为写入者，Claude Desktop 和 OpenClaw 只读。Claude Desktop 默认使用 `wiki_context`，可读取 confirmed/current wiki context、source cards、manifest、portfolio pages 和 indexes，但不读取 raw sources、current drafts、human notes 或 archive。
+策略写入知识库内部的 `.linta/agent_access.yaml`。常见配置是 Hermes 或 Codex 作为写入者，Claude Desktop 和 OpenClaw 只读。Claude Desktop 默认使用 `wiki_context`，可读取 confirmed/current wiki context、source cards、manifest、portfolio pages 和 indexes，但不读取 raw sources、current drafts、human notes 或 archive。
 
 Claude Desktop 接入：
 
 ```bash
-llm-wiki claude-desktop config ./SimonKnowledgeBase
-llm-wiki claude-desktop status ./SimonKnowledgeBase
+linta claude-desktop config ./SimonKnowledgeBase
+linta claude-desktop status ./SimonKnowledgeBase
 ```
 
-把生成的 MCP 片段加入 Claude Desktop 配置后重启应用。只读边界只适用于 llm-wiki-kit 提供的 MCP adapter；如果额外给 Claude Desktop 配置了 filesystem 或 shell 写权限，那些外部工具不受本项目强制约束。
+把生成的 MCP 片段加入 Claude Desktop 配置后重启应用。只读边界只适用于 Linta 提供的 MCP adapter；如果额外给 Claude Desktop 配置了 filesystem 或 shell 写权限，那些外部工具不受本项目强制约束。
 
 ## Obsidian Tags 与索引
 
-`llm-wiki tags` 会在 wiki Markdown 正文中写入受控 tag block：
+`linta tags` 会在 wiki Markdown 正文中写入受控 tag block：
 
 ```md
-<!-- llm-wiki-tags:start -->
+<!-- linta-tags:start -->
 #project/example #status/draft #capability/review
-<!-- llm-wiki-tags:end -->
+<!-- linta-tags:end -->
 ```
 
 tag 会规范化为小写 kebab-case，并支持 `#project/...`、`#capability/...`、`#status/...`
-等 namespace。CLI 拒绝写入 `ai_kb/raw/`，raw source 仍然保持不可变。`llm-wiki index build`
+等 namespace。CLI 拒绝写入 `ai_kb/raw/`，raw source 仍然保持不可变。`linta index build`
 会在 `ai_kb/wiki/indexes/` 下生成给工具消费的 JSON 索引。
 
 ## 上传与每日维护
@@ -114,13 +114,13 @@ tag 会规范化为小写 kebab-case，并支持 `#project/...`、`#capability/.
 Hermes gateway 或聊天入口上传的文件，应先导入 raw：
 
 ```bash
-llm-wiki raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
+linta raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
 ```
 
 每日维护不应该全量重新 ingest。运行：
 
 ```bash
-llm-wiki maintenance daily ./SimonKnowledgeBase
+linta maintenance daily ./SimonKnowledgeBase
 ```
 
 报告会列出新增 raw source、缺失 source card、lint 问题和建议动作。需要 LLM 判断、总结、编译 wiki 的步骤由用户已配置好的 Agent 执行，例如 Hermes。
@@ -132,7 +132,7 @@ llm-wiki maintenance daily ./SimonKnowledgeBase
 ## 安全边界
 
 - `raw/` 是不可变事实源。
-- `llm-wiki tags add/set` 拒绝写入 `ai_kb/raw/`。
+- `linta tags add/set` 拒绝写入 `ai_kb/raw/`。
 - `current/` 需要人工确认。
 - `export_for_ai/` 是消费层，不是事实源。
 - 用户应在提交前 review diff。
@@ -140,7 +140,7 @@ llm-wiki maintenance daily ./SimonKnowledgeBase
 
 ## 许可
 
-llm-wiki-kit 默认采用 PolyForm Noncommercial License 1.0.0。非商业使用可按 `LICENSE`
+Linta 默认采用 PolyForm Noncommercial License 1.0.0。非商业使用可按 `LICENSE`
 执行；商业使用必须获得单独的付费商业授权，见 [COMMERCIAL.md](COMMERCIAL.md)。
 
 由于保留商业使用授权权利，本项目不是 OSI 定义下的开源项目，而是 source-available 项目。
@@ -158,16 +158,16 @@ llm-wiki-kit 默认采用 PolyForm Noncommercial License 1.0.0。非商业使用
 
 ## Hermes adapter
 
-Hermes 集成是可选能力，位于 `hermes/`。安装命令默认复制 skills 到 `~/.hermes/skills/llm-wiki-kit/`，已存在的 skill 默认跳过，除非传入 `--force`。v0.2.1 已包含 Hermes tags/index skills，用于接入现有的 `llm-wiki tags` 和 `llm-wiki index build` 工作流。v0.2.2 增加 `configure-kb`，让 Hermes 通过本地 profile 记住默认知识库路径。v0.2.3 增加 `bootstrap-prompt`，可生成直接粘贴给 Hermes Agent 的自然语言安装请求。v0.2.4 增加上传导入和每日维护 skills。
+Hermes 集成是可选能力，位于 `hermes/`。安装命令默认复制 skills 到 `~/.hermes/skills/linta/`，已存在的 skill 默认跳过，除非传入 `--force`。v0.2.1 已包含 Hermes tags/index skills，用于接入现有的 `linta tags` 和 `linta index build` 工作流。v0.2.2 增加 `configure-kb`，让 Hermes 通过本地 profile 记住默认知识库路径。v0.2.3 增加 `bootstrap-prompt`，可生成直接粘贴给 Hermes Agent 的自然语言安装请求。v0.2.4 增加上传导入和每日维护 skills。
 
 安装 Hermes skills 后，绑定默认知识库：
 
 ```bash
-llm-wiki hermes bootstrap-prompt ./SimonKnowledgeBase
-llm-wiki hermes configure-kb ./SimonKnowledgeBase
+linta hermes bootstrap-prompt ./SimonKnowledgeBase
+linta hermes configure-kb ./SimonKnowledgeBase
 ```
 
-`bootstrap-prompt` 会输出给 Hermes Agent 执行的自然语言步骤；`configure-kb` 会写入 `~/.hermes/skills/llm-wiki-kit/profiles/`。
+`bootstrap-prompt` 会输出给 Hermes Agent 执行的自然语言步骤；`configure-kb` 会写入 `~/.hermes/skills/linta/profiles/`。
 
 ## 后续路线
 

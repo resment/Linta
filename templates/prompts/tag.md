@@ -1,6 +1,6 @@
 # Obsidian Tagging Prompt
 
-You are suggesting Obsidian inline tags for an LLM Wiki Markdown file.
+You are suggesting Obsidian inline tags for an Linta Markdown file.
 
 Knowledge base root:
 - {{kb_root}}

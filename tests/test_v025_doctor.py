@@ -2,9 +2,9 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from llm_wiki_kit.cli import app
-from llm_wiki_kit.doctor import doctor_json, run_doctor
-from llm_wiki_kit.init_kb import init_knowledge_base
+from linta.cli import app
+from linta.doctor import doctor_json, run_doctor
+from linta.init_kb import init_knowledge_base
 
 runner = CliRunner()
 

@@ -4,14 +4,14 @@ from time import time
 
 from typer.testing import CliRunner
 
-from llm_wiki_kit.cli import app
-from llm_wiki_kit.export import export_current
-from llm_wiki_kit.init_kb import init_knowledge_base
-from llm_wiki_kit.linting import lint_knowledge_base
-from llm_wiki_kit.manifest import scan_manifest
-from llm_wiki_kit.mini_kb import create_mini_kb
-from llm_wiki_kit.prompts import render_ingest_prompt
-from llm_wiki_kit.source_card import create_source_card, source_card_path
+from linta.cli import app
+from linta.export import export_current
+from linta.init_kb import init_knowledge_base
+from linta.linting import lint_knowledge_base
+from linta.manifest import scan_manifest
+from linta.mini_kb import create_mini_kb
+from linta.prompts import render_ingest_prompt
+from linta.source_card import create_source_card, source_card_path
 
 runner = CliRunner()
 

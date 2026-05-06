@@ -8,7 +8,7 @@ AI chat.
 ## Create
 
 ```bash
-llm-wiki mini-kb create ./YourKnowledgeBase --topic "Example Project" --purpose "Review prep"
+linta mini-kb create ./YourKnowledgeBase --topic "Example Project" --purpose "Review prep"
 ```
 
 The generated file is a draft shell. It points the agent toward:

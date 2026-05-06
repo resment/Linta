@@ -1,6 +1,6 @@
 # Export Prompt
 
-You are preparing AI-consumable context from an LLM Wiki knowledge base.
+You are preparing AI-consumable context from an Linta knowledge base.
 
 Rules:
 1. Read confirmed pages under `ai_kb/wiki/current/`.

@@ -1,4 +1,4 @@
-# LLM Wiki Knowledge Base
+# Linta Knowledge Base
 
 This knowledge base separates human notes, immutable raw sources, AI-compiled wiki pages,
 human-confirmed current state, and AI-readable exports.

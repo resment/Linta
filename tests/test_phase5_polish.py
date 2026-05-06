@@ -13,10 +13,11 @@ def test_project_metadata_is_release_ready() -> None:
     metadata = loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     project = metadata["project"]
 
-    assert project["name"] == "llm-wiki-kit"
-    assert project["version"] == "0.3.0"
+    assert project["name"] == "linta"
+    assert project["version"] == "0.3.1"
     assert project["requires-python"] == ">=3.11"
     assert project["license"]["text"] == "PolyForm-Noncommercial-1.0.0"
+    assert "linta" in project["scripts"]
     assert "llm-wiki" in project["scripts"]
     assert "Homepage" in project["urls"]
     assert all("OSI Approved" not in classifier for classifier in project["classifiers"])
@@ -35,16 +36,16 @@ def test_manifest_includes_public_assets() -> None:
     assert "recursive-include templates *.md" in manifest
     assert "recursive-include hermes *.md *.sh" in manifest
     assert "recursive-include examples *.md" in manifest
-    assert "assets/hermes/skills/*/*.md" in setuptools_config["package-data"]["llm_wiki_kit"]
-    assert (REPO_ROOT / "src/llm_wiki_kit/assets/hermes/skills/build_indexes/SKILL.md").is_file()
+    assert "assets/hermes/skills/*/*.md" in setuptools_config["package-data"]["linta"]
+    assert (REPO_ROOT / "src/linta/assets/hermes/skills/build_indexes/SKILL.md").is_file()
     assert (
-        REPO_ROOT / "src/llm_wiki_kit/assets/hermes/skills/manage_obsidian_tags/SKILL.md"
+        REPO_ROOT / "src/linta/assets/hermes/skills/manage_obsidian_tags/SKILL.md"
     ).is_file()
     assert (
-        REPO_ROOT / "src/llm_wiki_kit/assets/hermes/skills/import_uploaded_raw_source/SKILL.md"
+        REPO_ROOT / "src/linta/assets/hermes/skills/import_uploaded_raw_source/SKILL.md"
     ).is_file()
     assert (
-        REPO_ROOT / "src/llm_wiki_kit/assets/hermes/skills/daily_maintenance/SKILL.md"
+        REPO_ROOT / "src/linta/assets/hermes/skills/daily_maintenance/SKILL.md"
     ).is_file()
     assert "templates/prompts/tag.md" in data_files["templates/prompts"]
     assert "COMMERCIAL.md" in setuptools_config["license-files"]
@@ -57,7 +58,7 @@ def test_license_files_reserve_commercial_rights() -> None:
     contributing = (REPO_ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
 
     assert "PolyForm Noncommercial License 1.0.0" in license_text
-    assert "Required Notice: Copyright 2026 llm-wiki-kit contributors" in license_text
+    assert "Required Notice: Copyright 2026 Linta contributors" in license_text
     assert "Commercial use requires a separate written" in commercial
     assert "separate commercial licenses" in contributing
 
@@ -67,8 +68,8 @@ def test_readmes_and_roadmap_are_v03_current() -> None:
     readme_cn = (REPO_ROOT / "README_CN.md").read_text(encoding="utf-8")
     roadmap = (REPO_ROOT / "ROADMAP.md").read_text(encoding="utf-8")
 
-    assert "v0.3.0" in readme
-    assert "v0.3.0" in readme_cn
+    assert "v0.3.1" in readme
+    assert "v0.3.1" in readme_cn
     assert "Obsidian" in readme
     assert "Obsidian" in readme_cn
     assert "Hermes tags/index" in readme
@@ -89,6 +90,7 @@ def test_readmes_and_roadmap_are_v03_current() -> None:
     assert "agents wizard" in readme_cn
     assert "MCP" in readme
     assert "MCP" in readme_cn
+    assert "v0.3.1 Status" in roadmap
     assert "v0.3.0 Status" in roadmap
     assert "v0.2.5 Status" in roadmap
     assert "v0.2.4 Status" in roadmap
@@ -110,7 +112,7 @@ def test_module_entrypoint_help() -> None:
     env = os.environ.copy()
     env["PYTHONPATH"] = "src"
     result = subprocess.run(
-        [sys.executable, "-m", "llm_wiki_kit", "--help"],
+        [sys.executable, "-m", "linta", "--help"],
         cwd=REPO_ROOT,
         env=env,
         text=True,

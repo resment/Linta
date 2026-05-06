@@ -2,17 +2,18 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from llm_wiki_kit.cli import app
-from llm_wiki_kit.indexes import build_indexes
-from llm_wiki_kit.init_kb import init_knowledge_base
-from llm_wiki_kit.linting import lint_knowledge_base
-from llm_wiki_kit.manifest import scan_manifest
-from llm_wiki_kit.source_card import create_source_card
-from llm_wiki_kit.tags import (
+from linta.cli import app
+from linta.indexes import build_indexes
+from linta.init_kb import init_knowledge_base
+from linta.linting import lint_knowledge_base
+from linta.manifest import scan_manifest
+from linta.source_card import create_source_card
+from linta.tags import (
     TAG_BLOCK_END,
     TAG_BLOCK_START,
     add_tags_to_markdown,
     extract_inline_tags,
+    extract_managed_tags,
     normalize_tag,
     set_tag_block,
 )
@@ -66,6 +67,23 @@ def test_tag_block_insert_and_replace_after_frontmatter() -> None:
     assert "#status/draft" not in replaced
     assert TAG_BLOCK_END in replaced
     assert "#user/tag" in replaced
+
+
+def test_legacy_tag_block_is_read_and_replaced() -> None:
+    markdown = """# Example
+
+<!-- llm-wiki-tags:start -->
+#project/old
+<!-- llm-wiki-tags:end -->
+"""
+
+    assert extract_managed_tags(markdown) == ["#project/old"]
+
+    replaced = set_tag_block(markdown, ["project/new"])
+
+    assert "<!-- linta-tags:start -->" in replaced
+    assert "<!-- llm-wiki-tags:start -->" not in replaced
+    assert "#project/new" in replaced
 
 
 def test_cli_tags_add_set_list_and_raw_write_rejected(tmp_path: Path) -> None:
@@ -158,9 +176,9 @@ project: Example Project
 capabilities: [Review Configuration]
 ---
 
-<!-- llm-wiki-tags:start -->
+<!-- linta-tags:start -->
 #project/example #capability/review-configuration
-<!-- llm-wiki-tags:end -->
+<!-- linta-tags:end -->
 """,
         encoding="utf-8",
     )
@@ -206,9 +224,9 @@ source_type: meeting
 title: Current
 ---
 
-<!-- llm-wiki-tags:start -->
+<!-- linta-tags:start -->
 #Bad_Tag #bad-tag
-<!-- llm-wiki-tags:end -->
+<!-- linta-tags:end -->
 
 [Missing](../missing.md)
 """,

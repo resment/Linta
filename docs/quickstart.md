@@ -1,8 +1,8 @@
 # Quickstart
 
 ```bash
-pip install "llm-wiki-kit @ git+https://github.com/resment/LLM-Wiki-Kit.git"
-llm-wiki init ./SimonKnowledgeBase
+pip install "linta @ git+https://github.com/resment/LLM-Wiki-Kit.git"
+linta init ./SimonKnowledgeBase
 ```
 
 For local development after cloning the repository, use:
@@ -29,29 +29,29 @@ EOF
 Run deterministic tools:
 
 ```bash
-llm-wiki manifest scan ./SimonKnowledgeBase
-llm-wiki source-card create ./SimonKnowledgeBase ai_kb/raw/meetings/2026-04-21_example.md
-llm-wiki prompt ingest ./SimonKnowledgeBase ai_kb/raw/meetings/2026-04-21_example.md
-llm-wiki tags add ./SimonKnowledgeBase/ai_kb/wiki/source_cards/meetings__2026-04-21_example.source-card.md --tag project/example
-llm-wiki index build ./SimonKnowledgeBase
-llm-wiki lint ./SimonKnowledgeBase
+linta manifest scan ./SimonKnowledgeBase
+linta source-card create ./SimonKnowledgeBase ai_kb/raw/meetings/2026-04-21_example.md
+linta prompt ingest ./SimonKnowledgeBase ai_kb/raw/meetings/2026-04-21_example.md
+linta tags add ./SimonKnowledgeBase/ai_kb/wiki/source_cards/meetings__2026-04-21_example.source-card.md --tag project/example
+linta index build ./SimonKnowledgeBase
+linta lint ./SimonKnowledgeBase
 ```
 
 Import an uploaded file:
 
 ```bash
-llm-wiki raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
-llm-wiki maintenance daily ./SimonKnowledgeBase
+linta raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
+linta maintenance daily ./SimonKnowledgeBase
 ```
 
 Export confirmed current pages:
 
 ```bash
-llm-wiki export current ./SimonKnowledgeBase --single-file current_all.md
+linta export current ./SimonKnowledgeBase --single-file current_all.md
 ```
 
 Create task context:
 
 ```bash
-llm-wiki mini-kb create ./SimonKnowledgeBase --topic "Example Project" --purpose "Review prep"
+linta mini-kb create ./SimonKnowledgeBase --topic "Example Project" --purpose "Review prep"
 ```

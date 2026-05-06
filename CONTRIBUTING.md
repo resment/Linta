@@ -1,6 +1,6 @@
 # Contributing
 
-By contributing to llm-wiki-kit, you agree that your contribution may be distributed under:
+By contributing to Linta, you agree that your contribution may be distributed under:
 
 1. the PolyForm Noncommercial License 1.0.0; and
 2. separate commercial licenses offered by the project owner.

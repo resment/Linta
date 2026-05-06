@@ -20,5 +20,5 @@ promotion. A confirmation workflow should:
 
 ## Staleness
 
-`llm-wiki lint --max-current-age N` warns when current pages have not been updated recently. This
+`linta lint --max-current-age N` warns when current pages have not been updated recently. This
 does not mean the page is wrong; it means the user should review freshness.

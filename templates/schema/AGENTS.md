@@ -1,4 +1,4 @@
-# LLM Wiki Maintenance Rules
+# Linta Maintenance Rules
 
 ## Directory Roles
 

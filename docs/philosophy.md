@@ -1,6 +1,6 @@
 # Philosophy
 
-llm-wiki-kit treats knowledge bases as a small compile pipeline:
+Linta treats knowledge bases as a small compile pipeline:
 
 1. Raw sources are immutable evidence.
 2. Source cards summarize and classify evidence without replacing it.
@@ -12,6 +12,6 @@ llm-wiki-kit treats knowledge bases as a small compile pipeline:
 The framework deliberately avoids hidden inference. Important claims should cite source paths,
 and conflicts should remain visible until a human resolves them.
 
-This is different from ordinary RAG. RAG retrieves chunks at query time. llm-wiki-kit encourages
+This is different from ordinary RAG. RAG retrieves chunks at query time. Linta encourages
 agents to maintain a reviewed Markdown knowledge layer over time, so later queries start from a
 stable, auditable current-state view instead of re-reading every raw document.
