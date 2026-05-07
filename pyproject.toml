@@ -40,9 +40,9 @@ linta = "linta.cli:app"
 llm-wiki = "linta.cli:deprecated_main"
 
 [project.urls]
-Homepage = "https://github.com/resment/LLM-Wiki-Kit"
-Repository = "https://github.com/resment/LLM-Wiki-Kit"
-Issues = "https://github.com/resment/LLM-Wiki-Kit/issues"
+Homepage = "https://github.com/resment/Linta"
+Repository = "https://github.com/resment/Linta"
+Issues = "https://github.com/resment/Linta/issues"
 
 [tool.setuptools]
 include-package-data = true

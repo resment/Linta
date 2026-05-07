@@ -18,7 +18,7 @@ profiles, and a Claude Desktop read-only MCP adapter. It does not call an LLM AP
 ## Quick Start
 
 ```bash
-pip install "linta @ git+https://github.com/resment/LLM-Wiki-Kit.git"
+pip install "linta @ git+https://github.com/resment/Linta.git"
 linta init ./SimonKnowledgeBase
 ```
 

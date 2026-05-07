@@ -11,7 +11,7 @@ v0.3.1 提供确定性的项目脚手架、初始化命令、manifest 扫描、s
 ## 快速开始
 
 ```bash
-pip install "linta @ git+https://github.com/resment/LLM-Wiki-Kit.git"
+pip install "linta @ git+https://github.com/resment/Linta.git"
 linta init ./SimonKnowledgeBase
 ```
 

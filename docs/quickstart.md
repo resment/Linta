@@ -1,7 +1,7 @@
 # Quickstart
 
 ```bash
-pip install "linta @ git+https://github.com/resment/LLM-Wiki-Kit.git"
+pip install "linta @ git+https://github.com/resment/Linta.git"
 linta init ./SimonKnowledgeBase
 ```
 
