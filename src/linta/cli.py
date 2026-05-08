@@ -21,7 +21,9 @@ from linta.agent_access import (
     set_agent_access,
 )
 from linta.claude_desktop import (
+    build_claude_project_instructions,
     claude_desktop_status_json,
+    claude_project_instructions_json,
     inspect_claude_desktop_status,
     render_claude_desktop_config,
 )
@@ -500,7 +502,27 @@ def claude_desktop_status(
         console.print(f"Claude Desktop mode: {status.policy_mode}")
         console.print(f"Read scope: {status.read_scope}")
         console.print(f"KB OK: {status.kb_ok}")
+        console.print(
+            "Project instructions: "
+            f"linta claude-desktop project-instructions {status.kb_root}"
+        )
+        for warning in status.warnings:
+            console.print(f"[yellow]Warning:[/yellow] {warning}")
         console.print(status.message)
+
+
+@claude_desktop_app.command("project-instructions")
+def claude_desktop_project_instructions(
+    kb_root: Annotated[Path, typer.Argument(help="Knowledge base root.")],
+    json_output: Annotated[bool, typer.Option("--json", help="Print JSON output.")] = False,
+) -> None:
+    """Print Claude Project instructions for practical Linta context."""
+
+    instructions = build_claude_project_instructions(kb_root)
+    if json_output:
+        console.out(claude_project_instructions_json(instructions))
+    else:
+        console.out(instructions.instructions)
 
 
 @mcp_app.command("serve")

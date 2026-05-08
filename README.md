@@ -9,7 +9,7 @@ It is not a normal note template and it is not a RAG system. The project separat
 
 ## Status
 
-v0.3.3 provides deterministic scaffolding, initialization, manifest scanning,
+v0.3.4 provides deterministic scaffolding, initialization, manifest scanning,
 source-card templates, prompt rendering, linting, current export, mini-kb draft generation,
 optional Hermes skills, Obsidian-friendly Markdown tags, machine-readable indexes, and
 stronger consistency checks. It also includes doctor diagnostics, Hermes status, multi-agent access
@@ -43,7 +43,7 @@ archive/               Archived material.
 
 ## CLI
 
-v0.3.3 supports:
+v0.3.4 supports:
 
 ```bash
 linta init ./SimonKnowledgeBase
@@ -64,6 +64,7 @@ linta agents wizard ./SimonKnowledgeBase
 linta agents status ./SimonKnowledgeBase
 linta claude-desktop config ./SimonKnowledgeBase
 linta claude-desktop status ./SimonKnowledgeBase
+linta claude-desktop project-instructions ./SimonKnowledgeBase
 linta mcp serve --agent claude-desktop --kb-root ./SimonKnowledgeBase
 linta prompt lint-ai ./SimonKnowledgeBase
 linta lint ./SimonKnowledgeBase
@@ -87,6 +88,7 @@ v0.3.0 adds `.linta/agent_access.yaml`, `agents wizard`, and Claude Desktop read
 v0.3.1 renames the project to Linta / 灵台.
 v0.3.2 adds rename migration hardening through `linta migrate`.
 v0.3.3 adds practical Claude Desktop MCP context tools for overview, search, read, and bundle.
+v0.3.4 adds Claude Project instructions for practical Linta MCP usage.
 
 ## Verify Installation
 
@@ -132,6 +134,7 @@ For Claude Desktop:
 ```bash
 linta claude-desktop config ./SimonKnowledgeBase
 linta claude-desktop status ./SimonKnowledgeBase
+linta claude-desktop project-instructions ./SimonKnowledgeBase
 ```
 
 Add the generated MCP snippet to Claude Desktop and restart the app. The read-only boundary applies
@@ -142,6 +145,10 @@ Claude Desktop should start with the `context_overview` MCP tool, then use `cont
 `context_read`, and `context_bundle` to choose relevant compiled wiki context. These practical
 context tools do not read `ai_kb/raw/`; raw remains the source-material layer for the primary
 writer agent.
+
+Paste the `project-instructions` output into Claude Project instructions so Claude starts with
+Linta context tools, cites Linta paths, and reports missing compiled context instead of requesting
+raw sources.
 
 ## Obsidian Tags and Indexes
 

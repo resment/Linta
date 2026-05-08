@@ -67,7 +67,14 @@ compiled wiki layer.
 
 ## Claude Project Workflow
 
-In a Claude Project, ask Claude to use the Linta MCP tools in this order:
+Generate Project instructions:
+
+```bash
+linta claude-desktop project-instructions /path/to/YourKnowledgeBase
+```
+
+Paste the output into Claude Project instructions. The generated text tells Claude to use the Linta
+MCP tools in this order:
 
 ```text
 Use the Linta MCP server. Start with context_overview, then use context_search,
@@ -82,11 +89,18 @@ The practical tools are:
 - `context_read`: reads one allowed context file.
 - `context_bundle`: builds a compact package from a query or explicit paths.
 
+Machine-readable output is also available:
+
+```bash
+linta claude-desktop project-instructions /path/to/YourKnowledgeBase --json
+```
+
 ## Status Checks
 
 ```bash
 linta agents status /path/to/YourKnowledgeBase
 linta claude-desktop status /path/to/YourKnowledgeBase
+linta claude-desktop project-instructions /path/to/YourKnowledgeBase
 linta doctor /path/to/YourKnowledgeBase
 ```
 

@@ -1,5 +1,14 @@
 # Roadmap
 
+## v0.3.4 Status
+
+Implemented:
+
+- `linta claude-desktop project-instructions <kb_root>` for Claude Project onboarding.
+- JSON output for project instructions.
+- Claude Desktop status reports Project instructions availability.
+- README / README_CN and Claude Desktop docs explain the copy-paste Project workflow.
+
 ## v0.3.3 Status
 
 Implemented:

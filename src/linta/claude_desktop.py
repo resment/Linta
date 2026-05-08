@@ -11,6 +11,11 @@ from linta.agent_access import read_agent_policy
 from linta.doctor import run_doctor
 from linta.mcp_server import PRACTICAL_CONTEXT_TOOLS
 
+READ_BOUNDARY = (
+    "Use compiled Linta wiki context only. Do not request or read ai_kb/raw, human, archive, "
+    "or ai_kb/wiki/current_draft through Claude Project work."
+)
+
 
 @dataclass(frozen=True)
 class ClaudeDesktopStatus:
@@ -19,6 +24,7 @@ class ClaudeDesktopStatus:
     read_scope: str
     kb_ok: bool
     practical_context_tools: list[str]
+    project_instructions_available: bool
     warnings: list[str]
     message: str
 
@@ -29,8 +35,27 @@ class ClaudeDesktopStatus:
             "read_scope": self.read_scope,
             "kb_ok": self.kb_ok,
             "practical_context_tools": self.practical_context_tools,
+            "project_instructions_available": self.project_instructions_available,
             "warnings": self.warnings,
             "message": self.message,
+        }
+
+
+@dataclass(frozen=True)
+class ClaudeProjectInstructions:
+    kb_root: Path
+    instructions: str
+    tools: list[str]
+    read_boundary: str
+    recommended_first_prompt: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "kb_root": self.kb_root.as_posix(),
+            "instructions": self.instructions,
+            "tools": self.tools,
+            "read_boundary": self.read_boundary,
+            "recommended_first_prompt": self.recommended_first_prompt,
         }
 
 
@@ -74,6 +99,7 @@ def inspect_claude_desktop_status(kb_root: Path) -> ClaudeDesktopStatus:
         read_scope=policy.read_scope,
         kb_ok=ok,
         practical_context_tools=list(PRACTICAL_CONTEXT_TOOLS),
+        project_instructions_available=True,
         warnings=warnings,
         message=(
             "Claude Desktop can use the read-only MCP adapter."
@@ -88,3 +114,50 @@ def inspect_claude_desktop_status(kb_root: Path) -> ClaudeDesktopStatus:
 
 def claude_desktop_status_json(status: ClaudeDesktopStatus) -> str:
     return json.dumps(status.to_dict(), indent=2) + "\n"
+
+
+def build_claude_project_instructions(kb_root: Path) -> ClaudeProjectInstructions:
+    root = kb_root.expanduser().resolve()
+    first_prompt = (
+        "Use the Linta MCP server for this project. Start with context_overview, then search or "
+        "bundle the compiled wiki context that is relevant to my request."
+    )
+    instructions = "\n".join(
+        [
+            "# Linta Project Context",
+            "",
+            f"Knowledge base root: `{root.as_posix()}`",
+            "",
+            "Use the Linta MCP server as the project knowledge source. Start each new topic with "
+            "`context_overview`, then use `context_search`, `context_read`, and `context_bundle` "
+            "to decide which compiled wiki context is relevant.",
+            "",
+            READ_BOUNDARY,
+            "",
+            "Prefer `context_bundle` when a query can be answered from multiple wiki pages or "
+            "source cards. Prefer `context_read` when a specific Linta path is already known.",
+            "",
+            "When answering, cite the Linta paths you used, such as `ai_kb/wiki/current/...`, "
+            "`ai_kb/wiki/portfolio/...`, or `ai_kb/wiki/source_cards/...`.",
+            "",
+            "If the compiled wiki context is insufficient, state the missing context and ask for "
+            "the primary writer Agent to ingest or update the knowledge base. Do not bypass Linta "
+            "by requesting raw sources.",
+            "",
+            "Recommended first user prompt:",
+            "",
+            f"> {first_prompt}",
+            "",
+        ]
+    )
+    return ClaudeProjectInstructions(
+        kb_root=root,
+        instructions=instructions,
+        tools=list(PRACTICAL_CONTEXT_TOOLS),
+        read_boundary=READ_BOUNDARY,
+        recommended_first_prompt=first_prompt,
+    )
+
+
+def claude_project_instructions_json(instructions: ClaudeProjectInstructions) -> str:
+    return json.dumps(instructions.to_dict(), indent=2) + "\n"
