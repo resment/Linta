@@ -60,7 +60,7 @@ a Linta knowledge base. The matching command is shown for users who want to run 
 
 ```bash
 pip install "linta @ git+https://github.com/resment/Linta.git"
-linta init ./SimonKnowledgeBase
+linta init ./MyKnowledgeBase
 ```
 
 Then put files under `ai_kb/raw/`, ask an agent to ingest them with `linta prompt ingest`, review
@@ -101,35 +101,35 @@ archive/               Archived material.
 v0.3.6 supports:
 
 ```bash
-linta init ./SimonKnowledgeBase
-linta manifest scan ./SimonKnowledgeBase
-linta manifest scan ./SimonKnowledgeBase --no-preserve-manual-fields
-linta source-card create ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
-linta prompt ingest ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
-linta prompt entities ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
-linta prompt tag ./SimonKnowledgeBase ai_kb/wiki/projects/example.md
-linta tags list ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md
-linta tags add ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md --tag project/example
-linta tags set ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md --tag status/draft
-linta index build ./SimonKnowledgeBase
-linta raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
-linta maintenance daily ./SimonKnowledgeBase
-linta doctor ./SimonKnowledgeBase
-linta migrate ./SimonKnowledgeBase --dry-run
-linta agents wizard ./SimonKnowledgeBase
-linta agents status ./SimonKnowledgeBase
-linta claude-desktop config ./SimonKnowledgeBase
-linta claude-desktop status ./SimonKnowledgeBase
-linta claude-desktop project-instructions ./SimonKnowledgeBase
-linta mcp serve --agent claude-desktop --kb-root ./SimonKnowledgeBase
-linta prompt lint-ai ./SimonKnowledgeBase
-linta lint ./SimonKnowledgeBase
-linta export current ./SimonKnowledgeBase
-linta mini-kb create ./SimonKnowledgeBase --topic "Example" --purpose "Review prep"
+linta init ./MyKnowledgeBase
+linta manifest scan ./MyKnowledgeBase
+linta manifest scan ./MyKnowledgeBase --no-preserve-manual-fields
+linta source-card create ./MyKnowledgeBase ai_kb/raw/meetings/example.md
+linta prompt ingest ./MyKnowledgeBase ai_kb/raw/meetings/example.md
+linta prompt entities ./MyKnowledgeBase ai_kb/raw/meetings/example.md
+linta prompt tag ./MyKnowledgeBase ai_kb/wiki/projects/example.md
+linta tags list ./MyKnowledgeBase/ai_kb/wiki/projects/example.md
+linta tags add ./MyKnowledgeBase/ai_kb/wiki/projects/example.md --tag project/example
+linta tags set ./MyKnowledgeBase/ai_kb/wiki/projects/example.md --tag status/draft
+linta index build ./MyKnowledgeBase
+linta raw import ./MyKnowledgeBase ~/Downloads/uploaded.md --source-type docs
+linta maintenance daily ./MyKnowledgeBase
+linta doctor ./MyKnowledgeBase
+linta migrate ./MyKnowledgeBase --dry-run
+linta agents wizard ./MyKnowledgeBase
+linta agents status ./MyKnowledgeBase
+linta claude-desktop config ./MyKnowledgeBase
+linta claude-desktop status ./MyKnowledgeBase
+linta claude-desktop project-instructions ./MyKnowledgeBase
+linta mcp serve --agent claude-desktop --kb-root ./MyKnowledgeBase
+linta prompt lint-ai ./MyKnowledgeBase
+linta lint ./MyKnowledgeBase
+linta export current ./MyKnowledgeBase
+linta mini-kb create ./MyKnowledgeBase --topic "Example" --purpose "Review prep"
 linta hermes install-skills --dry-run
 linta hermes status
-linta hermes bootstrap-prompt ./SimonKnowledgeBase
-linta hermes configure-kb ./SimonKnowledgeBase
+linta hermes bootstrap-prompt ./MyKnowledgeBase
+linta hermes configure-kb ./MyKnowledgeBase
 python scripts/validate_example.py
 ```
 
@@ -153,8 +153,8 @@ v0.3.6 adds entity context, focused entity prompts, and entity relationship inde
 After init or Hermes setup, run:
 
 ```bash
-linta doctor ./SimonKnowledgeBase
-linta agents wizard ./SimonKnowledgeBase
+linta doctor ./MyKnowledgeBase
+linta agents wizard ./MyKnowledgeBase
 linta hermes status
 ```
 
@@ -166,8 +166,8 @@ skills, profiles, and whether the configured knowledge-base path is valid.
 After upgrading from the pre-Linta name, run:
 
 ```bash
-linta migrate ./SimonKnowledgeBase --dry-run
-linta migrate ./SimonKnowledgeBase
+linta migrate ./MyKnowledgeBase --dry-run
+linta migrate ./MyKnowledgeBase
 ```
 
 The migration copies legacy `.llm-wiki/agent_access.yaml` to `.linta/agent_access.yaml` when needed,
@@ -178,8 +178,8 @@ replaces legacy `llm-wiki-tags` blocks with `linta-tags`, and reports old Hermes
 Use one primary read/write agent and keep other agents read-only by default:
 
 ```bash
-linta agents wizard ./SimonKnowledgeBase
-linta agents status ./SimonKnowledgeBase
+linta agents wizard ./MyKnowledgeBase
+linta agents status ./MyKnowledgeBase
 ```
 
 The policy is stored inside the knowledge base at `.linta/agent_access.yaml`. A typical setup is
@@ -190,9 +190,9 @@ pages, and indexes, but not raw sources, current drafts, human notes, or archive
 For Claude Desktop:
 
 ```bash
-linta claude-desktop config ./SimonKnowledgeBase
-linta claude-desktop status ./SimonKnowledgeBase
-linta claude-desktop project-instructions ./SimonKnowledgeBase
+linta claude-desktop config ./MyKnowledgeBase
+linta claude-desktop status ./MyKnowledgeBase
+linta claude-desktop project-instructions ./MyKnowledgeBase
 ```
 
 Add the generated MCP snippet to Claude Desktop and restart the app. The read-only boundary applies
@@ -246,13 +246,13 @@ addition to the existing source, project, capability, and tag indexes.
 For files uploaded through Hermes gateway or another chat surface, import the file into raw first:
 
 ```bash
-linta raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
+linta raw import ./MyKnowledgeBase ~/Downloads/uploaded.md --source-type docs
 ```
 
 Daily maintenance should not re-ingest everything. Run:
 
 ```bash
-linta maintenance daily ./SimonKnowledgeBase
+linta maintenance daily ./MyKnowledgeBase
 ```
 
 The report identifies new raw sources, missing source cards, lint issues, and recommended actions.
@@ -285,8 +285,8 @@ daily maintenance, ingest, lint, mini-kb, export, current confirmation, tags, an
 After installing Hermes skills, bind your default knowledge base:
 
 ```bash
-linta hermes bootstrap-prompt ./SimonKnowledgeBase
-linta hermes configure-kb ./SimonKnowledgeBase
+linta hermes bootstrap-prompt ./MyKnowledgeBase
+linta hermes configure-kb ./MyKnowledgeBase
 ```
 
 `bootstrap-prompt` prints a natural-language prompt that Hermes Agent can follow. `configure-kb`

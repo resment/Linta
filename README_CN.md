@@ -48,7 +48,7 @@
 
 ```bash
 pip install "linta @ git+https://github.com/resment/Linta.git"
-linta init ./SimonKnowledgeBase
+linta init ./MyKnowledgeBase
 ```
 
 然后把文件放进 `ai_kb/raw/`，用 `linta prompt ingest` 让 agent 整理，人工 review 生成的
@@ -80,35 +80,35 @@ archive/               归档资料。
 v0.3.6 支持：
 
 ```bash
-linta init ./SimonKnowledgeBase
-linta manifest scan ./SimonKnowledgeBase
-linta manifest scan ./SimonKnowledgeBase --no-preserve-manual-fields
-linta source-card create ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
-linta prompt ingest ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
-linta prompt entities ./SimonKnowledgeBase ai_kb/raw/meetings/example.md
-linta prompt tag ./SimonKnowledgeBase ai_kb/wiki/projects/example.md
-linta tags list ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md
-linta tags add ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md --tag project/example
-linta tags set ./SimonKnowledgeBase/ai_kb/wiki/projects/example.md --tag status/draft
-linta index build ./SimonKnowledgeBase
-linta raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
-linta maintenance daily ./SimonKnowledgeBase
-linta doctor ./SimonKnowledgeBase
-linta migrate ./SimonKnowledgeBase --dry-run
-linta agents wizard ./SimonKnowledgeBase
-linta agents status ./SimonKnowledgeBase
-linta claude-desktop config ./SimonKnowledgeBase
-linta claude-desktop status ./SimonKnowledgeBase
-linta claude-desktop project-instructions ./SimonKnowledgeBase
-linta mcp serve --agent claude-desktop --kb-root ./SimonKnowledgeBase
-linta prompt lint-ai ./SimonKnowledgeBase
-linta lint ./SimonKnowledgeBase
-linta export current ./SimonKnowledgeBase
-linta mini-kb create ./SimonKnowledgeBase --topic "Example" --purpose "Review prep"
+linta init ./MyKnowledgeBase
+linta manifest scan ./MyKnowledgeBase
+linta manifest scan ./MyKnowledgeBase --no-preserve-manual-fields
+linta source-card create ./MyKnowledgeBase ai_kb/raw/meetings/example.md
+linta prompt ingest ./MyKnowledgeBase ai_kb/raw/meetings/example.md
+linta prompt entities ./MyKnowledgeBase ai_kb/raw/meetings/example.md
+linta prompt tag ./MyKnowledgeBase ai_kb/wiki/projects/example.md
+linta tags list ./MyKnowledgeBase/ai_kb/wiki/projects/example.md
+linta tags add ./MyKnowledgeBase/ai_kb/wiki/projects/example.md --tag project/example
+linta tags set ./MyKnowledgeBase/ai_kb/wiki/projects/example.md --tag status/draft
+linta index build ./MyKnowledgeBase
+linta raw import ./MyKnowledgeBase ~/Downloads/uploaded.md --source-type docs
+linta maintenance daily ./MyKnowledgeBase
+linta doctor ./MyKnowledgeBase
+linta migrate ./MyKnowledgeBase --dry-run
+linta agents wizard ./MyKnowledgeBase
+linta agents status ./MyKnowledgeBase
+linta claude-desktop config ./MyKnowledgeBase
+linta claude-desktop status ./MyKnowledgeBase
+linta claude-desktop project-instructions ./MyKnowledgeBase
+linta mcp serve --agent claude-desktop --kb-root ./MyKnowledgeBase
+linta prompt lint-ai ./MyKnowledgeBase
+linta lint ./MyKnowledgeBase
+linta export current ./MyKnowledgeBase
+linta mini-kb create ./MyKnowledgeBase --topic "Example" --purpose "Review prep"
 linta hermes install-skills --dry-run
 linta hermes status
-linta hermes bootstrap-prompt ./SimonKnowledgeBase
-linta hermes configure-kb ./SimonKnowledgeBase
+linta hermes bootstrap-prompt ./MyKnowledgeBase
+linta hermes configure-kb ./MyKnowledgeBase
 python scripts/validate_example.py
 ```
 
@@ -117,8 +117,8 @@ python scripts/validate_example.py
 初始化或配置 Hermes 后运行：
 
 ```bash
-linta doctor ./SimonKnowledgeBase
-linta agents wizard ./SimonKnowledgeBase
+linta doctor ./MyKnowledgeBase
+linta agents wizard ./MyKnowledgeBase
 linta hermes status
 ```
 
@@ -129,8 +129,8 @@ linta hermes status
 从旧名称升级到 Linta 后运行：
 
 ```bash
-linta migrate ./SimonKnowledgeBase --dry-run
-linta migrate ./SimonKnowledgeBase
+linta migrate ./MyKnowledgeBase --dry-run
+linta migrate ./MyKnowledgeBase
 ```
 
 迁移会在需要时把旧 `.llm-wiki/agent_access.yaml` 复制到 `.linta/agent_access.yaml`，把旧 `llm-wiki-tags` block 替换为 `linta-tags`，并报告旧 Hermes skills 目录。
@@ -140,8 +140,8 @@ linta migrate ./SimonKnowledgeBase
 默认使用一个主读写 Agent，其他 Agent 只读：
 
 ```bash
-linta agents wizard ./SimonKnowledgeBase
-linta agents status ./SimonKnowledgeBase
+linta agents wizard ./MyKnowledgeBase
+linta agents status ./MyKnowledgeBase
 ```
 
 策略写入知识库内部的 `.linta/agent_access.yaml`。常见配置是 Hermes 或 Codex 作为写入者，Claude Desktop 和 OpenClaw 只读。Claude Desktop 默认使用 `wiki_context`，可读取 confirmed/current wiki context、source cards、manifest、portfolio pages 和 indexes，但不读取 raw sources、current drafts、human notes 或 archive。
@@ -149,9 +149,9 @@ linta agents status ./SimonKnowledgeBase
 Claude Desktop 接入：
 
 ```bash
-linta claude-desktop config ./SimonKnowledgeBase
-linta claude-desktop status ./SimonKnowledgeBase
-linta claude-desktop project-instructions ./SimonKnowledgeBase
+linta claude-desktop config ./MyKnowledgeBase
+linta claude-desktop status ./MyKnowledgeBase
+linta claude-desktop project-instructions ./MyKnowledgeBase
 ```
 
 把生成的 MCP 片段加入 Claude Desktop 配置后重启应用。只读边界只适用于 Linta 提供的 MCP adapter；如果额外给 Claude Desktop 配置了 filesystem 或 shell 写权限，那些外部工具不受本项目强制约束。
@@ -192,13 +192,13 @@ tag 会规范化为小写 kebab-case，并支持 `#project/...`、`#capability/.
 Hermes gateway 或聊天入口上传的文件，应先导入 raw：
 
 ```bash
-linta raw import ./SimonKnowledgeBase ~/Downloads/uploaded.md --source-type docs
+linta raw import ./MyKnowledgeBase ~/Downloads/uploaded.md --source-type docs
 ```
 
 每日维护不应该全量重新 ingest。运行：
 
 ```bash
-linta maintenance daily ./SimonKnowledgeBase
+linta maintenance daily ./MyKnowledgeBase
 ```
 
 报告会列出新增 raw source、缺失 source card、lint 问题和建议动作。需要 LLM 判断、总结、编译 wiki 的步骤由用户已配置好的 Agent 执行，例如 Hermes。
@@ -241,8 +241,8 @@ Hermes 集成是可选能力，位于 `hermes/`。安装命令默认复制 skill
 安装 Hermes skills 后，绑定默认知识库：
 
 ```bash
-linta hermes bootstrap-prompt ./SimonKnowledgeBase
-linta hermes configure-kb ./SimonKnowledgeBase
+linta hermes bootstrap-prompt ./MyKnowledgeBase
+linta hermes configure-kb ./MyKnowledgeBase
 ```
 
 `bootstrap-prompt` 会输出给 Hermes Agent 执行的自然语言步骤；`configure-kb` 会写入 `~/.hermes/skills/linta/profiles/`。

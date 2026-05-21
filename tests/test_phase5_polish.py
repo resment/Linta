@@ -72,6 +72,8 @@ def test_readmes_and_roadmap_are_v03_current() -> None:
     assert "v0.3.6" in readme_cn
     assert "Install, Upgrade, Remove" in readme
     assert "安装、升级、删除" in readme_cn
+    assert "Simon" not in readme
+    assert "Simon" not in readme_cn
     assert "pip install --upgrade" in readme
     assert "pip uninstall linta" in readme
     assert "What You Can Ask" in readme
