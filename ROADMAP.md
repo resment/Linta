@@ -1,5 +1,14 @@
 # Roadmap
 
+## v0.3.6 Status
+
+Implemented:
+
+- Entity context for people, teams, product lines, aliases, and project mappings.
+- Focused `linta prompt entities` workflow for source-backed entity updates.
+- Derived `entities.json`, `relationships.json`, and `project_map.json` indexes.
+- README / README_CN front matter rewritten for user-facing onboarding and natural-language usage.
+
 ## v0.3.5 Status
 
 Implemented:

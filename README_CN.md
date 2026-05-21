@@ -1,14 +1,48 @@
 # 灵台 Linta
 
-`Linta`，中文名「灵台」，是一个 source-available 的 “LLM 编译型 Markdown 知识库” 框架。
+`Linta`，中文名「灵台」，可以把零散笔记、会议实录、文档和 AI 对话整理成一个让后续 AI
+真正读得懂的知识库。
 
-它不是普通笔记模板，也不是 RAG 系统。项目把不可变原始资料、AI 编译后的 wiki、人工确认的当前状态，以及面向 AI 工具的导出层分开管理。
+很多个人或团队知识库会慢慢变成 AI 很难使用的资料堆：原始文件越积越多，人名和项目名不断变化，旧语境和当前事实混在一起，每次新对话又要重新解释背景。Linta 提供的是一层基于 Markdown、来源引用和人工 review 的 AI 记忆整理层。
 
-## 当前状态
+## 为什么用 Linta
 
-v0.3.5 提供确定性的项目脚手架、初始化命令、manifest 扫描、source card 模板、prompt 渲染、lint、current 导出、mini-kb 草稿、可选 Hermes skills、Obsidian 友好的 Markdown tags、机器可读索引、上传文档导入、每日维护报告、doctor、Hermes status、多 Agent 访问策略和带 practical context tools / Project instructions / freshness signals 的 Claude Desktop 只读 MCP adapter。默认不调用任何 LLM API。
+- 原始材料保持不可变，会议纪要、文档和聊天记录不会被 AI 改写污染。
+- AI 可以把混乱材料编译成清晰的 wiki、source card、项目地图和当前状态摘要。
+- ChatGPT、Claude、Gemini、Hermes、Codex 等工具可以读取整理后的上下文，而不是每次塞一堆 raw 文件。
+- 可以维护人、团队、别名、产品线和项目关系，让模型知道“谁和什么有关”。
+- 可以区分历史语境和当前事实，避免旧角色、旧结论覆盖今天的情况。
 
-编译后的 wiki 也可以维护实体上下文，包括人、团队、产品线、别名和项目映射。实体提炼采用 prompt 驱动：Linta 提供确定性的模板、索引、lint 检查和 agent prompt，由用户配置的 agent 写入有来源支撑的草稿。
+## 安装、升级、删除
+
+对大多数用户来说，Linta 就是一个很小的本地命令行工具。安装一次之后，可以在 Codex、Hermes、Terminal，或任何能执行本地命令的 agent 里使用。
+
+| 目标 | 命令 | 会发生什么 |
+| --- | --- | --- |
+| 安装 Linta | `pip install "linta @ git+https://github.com/resment/Linta.git"` | 在当前 Python 环境里加入 `linta` 命令。 |
+| 升级到最新版本 | `pip install --upgrade "linta @ git+https://github.com/resment/Linta.git"` | 用 GitHub 上的最新版替换本地已安装版本。 |
+| 查看当前版本 | `linta --version` | 输出当前安装的 Linta 版本。 |
+| 删除 Linta | `pip uninstall linta` | 删除 Python 包和命令；已经创建的知识库文件夹会保留在磁盘上。 |
+| 参与源码开发 | `pip install -e ".[dev]"` | 把 clone 下来的源码以可编辑开发模式安装。 |
+
+如果你的 Python 环境不允许全局安装，可以先创建虚拟环境，或者把 Linta 安装到你的 agent 工具正在使用的 Python 环境里。
+
+## 你可以怎么说
+
+下面是可以直接对 Codex、Hermes 或其他 agent 说的自然语言，以及背后对应的 Linta 命令。
+
+| 你可以这样说 | 背后的命令 | 能实现什么 |
+| --- | --- | --- |
+| “在这里创建一个 AI 能读懂的知识库。” | `linta init ./MyKnowledgeBase` | 创建标准目录和初始维护规则。 |
+| “把这个上传的文档放进知识库。” | `linta raw import ./MyKnowledgeBase ~/Downloads/file.md --source-type docs` | 把文件导入不可变 raw 区。 |
+| “帮我把这份会议纪要准备成可整理的材料。” | `linta source-card create ./MyKnowledgeBase ai_kb/raw/meetings/example.md` | 为单个 raw 文件生成 source card。 |
+| “读取这份材料，更新相关 wiki。” | `linta prompt ingest ./MyKnowledgeBase ai_kb/raw/meetings/example.md` | 给 agent 一套明确的 ingest 工作流。 |
+| “从这份材料里提取人、团队、别名和项目关系。” | `linta prompt entities ./MyKnowledgeBase ai_kb/raw/meetings/example.md` | 专门更新实体、别名和项目映射。 |
+| “给这个项目评审整理一个小上下文包。” | `linta mini-kb create ./MyKnowledgeBase --topic "Project" --purpose "Review prep"` | 生成面向单次任务的小知识库。 |
+| “检查一下这个知识库有没有问题。” | `linta doctor ./MyKnowledgeBase` | 检查目录、必需文件和安装状态。 |
+| “看看最近有什么需要维护。” | `linta maintenance daily ./MyKnowledgeBase` | 找出新增 raw、缺失 source card 和 lint 问题。 |
+| “让 Claude Desktop 能只读访问这个知识库。” | `linta claude-desktop config ./MyKnowledgeBase` | 输出 Claude Desktop MCP 配置片段。 |
+| “导出已经确认的当前知识给其他 AI 工具用。” | `linta export current ./MyKnowledgeBase` | 把审核过的 current 内容复制到导出层。 |
 
 ## 快速开始
 
@@ -17,7 +51,16 @@ pip install "linta @ git+https://github.com/resment/Linta.git"
 linta init ./SimonKnowledgeBase
 ```
 
-如果是 clone 仓库后的本地开发环境，再使用 `pip install -e ".[dev]"`。
+然后把文件放进 `ai_kb/raw/`，用 `linta prompt ingest` 让 agent 整理，人工 review 生成的
+wiki 更新，需要给其他 AI 工具使用时再导出 confirmed context。
+
+如果是 clone 仓库后的本地开发环境，使用 `pip install -e ".[dev]"`。
+
+## 当前版本
+
+v0.3.6 增加了实体上下文能力，可以维护人、团队、产品线、别名、带时间切片的关系和项目地图。它同时保留 v0.3 系列能力：确定性脚手架、manifest 扫描、source card 模板、prompt 渲染、lint、current 导出、mini-kb 草稿、可选 Hermes skills、Obsidian 友好的 Markdown tags、机器可读索引、doctor、多 Agent 访问策略，以及 Claude Desktop 只读 MCP practical context tools。
+
+Linta 默认不调用任何 LLM API。它提供安全结构和 prompt，真正的语义整理由你配置的 agent 在你的环境里完成。
 
 ## 核心目录
 
@@ -32,9 +75,9 @@ ai_kb/export_for_ai/   给 ChatGPT / Claude / Gemini 等工具读取的消费层
 archive/               归档资料。
 ```
 
-## CLI
+## 命令参考
 
-v0.3.5 支持：
+v0.3.6 支持：
 
 ```bash
 linta init ./SimonKnowledgeBase

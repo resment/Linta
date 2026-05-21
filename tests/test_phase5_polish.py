@@ -14,7 +14,7 @@ def test_project_metadata_is_release_ready() -> None:
     project = metadata["project"]
 
     assert project["name"] == "linta"
-    assert project["version"] == "0.3.5"
+    assert project["version"] == "0.3.6"
     assert project["requires-python"] == ">=3.11"
     assert project["license"]["text"] == "PolyForm-Noncommercial-1.0.0"
     assert "linta" in project["scripts"]
@@ -68,8 +68,14 @@ def test_readmes_and_roadmap_are_v03_current() -> None:
     readme_cn = (REPO_ROOT / "README_CN.md").read_text(encoding="utf-8")
     roadmap = (REPO_ROOT / "ROADMAP.md").read_text(encoding="utf-8")
 
-    assert "v0.3.5" in readme
-    assert "v0.3.5" in readme_cn
+    assert "v0.3.6" in readme
+    assert "v0.3.6" in readme_cn
+    assert "Install, Upgrade, Remove" in readme
+    assert "安装、升级、删除" in readme_cn
+    assert "pip install --upgrade" in readme
+    assert "pip uninstall linta" in readme
+    assert "What You Can Ask" in readme
+    assert "你可以怎么说" in readme_cn
     assert "Obsidian" in readme
     assert "Obsidian" in readme_cn
     assert "Hermes tags/index" in readme
@@ -90,6 +96,7 @@ def test_readmes_and_roadmap_are_v03_current() -> None:
     assert "agents wizard" in readme_cn
     assert "MCP" in readme
     assert "MCP" in readme_cn
+    assert "v0.3.6 Status" in roadmap
     assert "v0.3.5 Status" in roadmap
     assert "v0.3.4 Status" in roadmap
     assert "v0.3.3 Status" in roadmap

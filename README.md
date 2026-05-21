@@ -1,24 +1,60 @@
 # Linta（灵台）
 
-`Linta`（中文名：灵台） is a source-available framework for building LLM-compiled Markdown
-knowledge bases.
+`Linta`（中文名：灵台） helps you turn scattered notes, meeting transcripts, documents, and AI
+conversations into a knowledge base that future AI assistants can actually understand.
 
 Chinese README: [README_CN.md](README_CN.md)
 
-It is not a normal note template and it is not a RAG system. The project separates immutable raw sources from AI-compiled wiki pages, human-confirmed current state, and export-ready context for tools such as ChatGPT, Claude, Gemini, Hermes, and Codex.
+Most personal or team knowledge bases become hard for AI to use: raw files pile up, people and
+project names drift, old context gets mixed with current truth, and every new chat starts from
+scratch. Linta gives your AI tools a clean, reviewable memory layer built from Markdown files,
+source citations, and explicit human review.
 
-## Status
+## Why Linta
 
-v0.3.5 provides deterministic scaffolding, initialization, manifest scanning,
-source-card templates, prompt rendering, linting, current export, mini-kb draft generation,
-optional Hermes skills, Obsidian-friendly Markdown tags, machine-readable indexes, and
-stronger consistency checks. It also includes doctor diagnostics, Hermes status, multi-agent access
-profiles, and a Claude Desktop read-only MCP adapter with practical context tools. It does not call
-an LLM API by default.
+- Keep the original material untouched, so meeting notes and documents stay trustworthy.
+- Let AI compile messy material into clean wiki pages, source cards, project maps, and current-state
+  summaries.
+- Give ChatGPT, Claude, Gemini, Hermes, Codex, and similar tools a compact context layer instead of
+  dumping raw folders into every conversation.
+- Track people, teams, aliases, product lines, and project relationships so the model can tell who
+  is related to what.
+- Keep historical context separate from current truth, so old roles and decisions do not overwrite
+  today’s situation.
 
-The compiled wiki can also maintain entity context for people, teams, product lines, aliases, and
-project mappings. Entity extraction is prompt-driven: Linta provides deterministic templates,
-indexes, lint checks, and agent prompts, while the configured agent writes source-backed drafts.
+## Install, Upgrade, Remove
+
+For most users, Linta is just a small command-line helper. Install it once, then use it from Codex,
+Hermes, Terminal, or any agent that can run local commands.
+
+| Goal | Command | What happens |
+| --- | --- | --- |
+| Install Linta | `pip install "linta @ git+https://github.com/resment/Linta.git"` | Adds the `linta` command to your Python environment. |
+| Upgrade to the latest version | `pip install --upgrade "linta @ git+https://github.com/resment/Linta.git"` | Replaces the installed command with the newest release from GitHub. |
+| Check the installed version | `linta --version` | Prints the current Linta version. |
+| Remove Linta | `pip uninstall linta` | Removes the Python package and command. Your knowledge-base folders stay on disk. |
+| Work on the source code | `pip install -e ".[dev]"` | Installs a cloned checkout in editable development mode. |
+
+If your Python installation blocks global package installs, create a virtual environment first or
+install Linta inside the same environment used by your agent tool.
+
+## What You Can Ask
+
+These are natural-language requests you can give to Codex, Hermes, or another agent working inside
+a Linta knowledge base. The matching command is shown for users who want to run it directly.
+
+| Say this | Command behind it | What it does |
+| --- | --- | --- |
+| "Create a new AI-readable knowledge base here." | `linta init ./MyKnowledgeBase` | Creates the standard folders and starter rules. |
+| "Import this uploaded document into the knowledge base." | `linta raw import ./MyKnowledgeBase ~/Downloads/file.md --source-type docs` | Copies a file into immutable raw material. |
+| "Prepare this meeting note for AI ingestion." | `linta source-card create ./MyKnowledgeBase ai_kb/raw/meetings/example.md` | Creates a structured source card for one raw file. |
+| "Ingest this source and update the related wiki pages." | `linta prompt ingest ./MyKnowledgeBase ai_kb/raw/meetings/example.md` | Gives the agent the exact update workflow. |
+| "Extract people, teams, aliases, and project relationships from this source." | `linta prompt entities ./MyKnowledgeBase ai_kb/raw/meetings/example.md` | Focuses the agent on entity and project-map updates. |
+| "Build a small context pack for this project review." | `linta mini-kb create ./MyKnowledgeBase --topic "Project" --purpose "Review prep"` | Creates a compact mini knowledge base for one task. |
+| "Check whether my knowledge base is healthy." | `linta doctor ./MyKnowledgeBase` | Checks layout, required files, and setup health. |
+| "What changed recently and what needs maintenance?" | `linta maintenance daily ./MyKnowledgeBase` | Finds new raw sources, missing source cards, and lint issues. |
+| "Make this knowledge base readable by Claude Desktop." | `linta claude-desktop config ./MyKnowledgeBase` | Prints the read-only MCP config snippet. |
+| "Export confirmed current knowledge for other AI tools." | `linta export current ./MyKnowledgeBase` | Copies reviewed current pages into the export layer. |
 
 ## Quick Start
 
@@ -27,7 +63,21 @@ pip install "linta @ git+https://github.com/resment/Linta.git"
 linta init ./SimonKnowledgeBase
 ```
 
-For local development after cloning the repository, use `pip install -e ".[dev]"`.
+Then put files under `ai_kb/raw/`, ask an agent to ingest them with `linta prompt ingest`, review
+the generated wiki updates, and export confirmed context when another AI tool needs it.
+
+For local development after cloning this repository, use `pip install -e ".[dev]"`.
+
+## Current Release
+
+v0.3.6 adds entity context for people, teams, product lines, aliases, time-sliced relationships, and
+project maps. It also keeps the v0.3 line features: deterministic scaffolding, manifest scanning,
+source-card templates, prompt rendering, linting, current export, mini-kb draft generation, optional
+Hermes skills, Obsidian-friendly Markdown tags, machine-readable indexes, doctor diagnostics,
+multi-agent access profiles, and Claude Desktop read-only MCP practical context tools.
+
+Linta does not call an LLM API by default. It gives your chosen agent a safe structure and prompts;
+the source-backed semantic writing happens in your agent environment.
 
 ## Core Layout
 
@@ -46,9 +96,9 @@ archive/               Archived material.
 
 `current_draft/` is AI-generated and needs review. `current/` is the human-confirmed current state. Agents may update drafts, but must not update `current/` unless the user explicitly confirms.
 
-## CLI
+## Command Reference
 
-v0.3.5 supports:
+v0.3.6 supports:
 
 ```bash
 linta init ./SimonKnowledgeBase
@@ -96,6 +146,7 @@ v0.3.2 adds rename migration hardening through `linta migrate`.
 v0.3.3 adds practical Claude Desktop MCP context tools for overview, search, read, and bundle.
 v0.3.4 adds Claude Project instructions for practical Linta MCP usage.
 v0.3.5 adds context freshness signals for Claude Desktop MCP overview and bundles.
+v0.3.6 adds entity context, focused entity prompts, and entity relationship indexes.
 
 ## Verify Installation
 
